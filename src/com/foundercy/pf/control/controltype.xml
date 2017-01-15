@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="gbk"?>
+<control_config>
+    <combobox     		class="com.foundercy.pf.control.FComboBox"/>
+    <treeassist     	class="com.foundercy.pf.dictionary.control.FTreeAssistInput"/>
+    <bistreeassist     	class="com.foundercy.pf.gl.viewer.BisTreeAssistInput"/>
+    <tableassist    	class="com.foundercy.pf.dictionary.control.FTableAssistInput"/>
+    <assistcombobox 	class="com.foundercy.pf.dictionary.control.FAssistComboBox"/>
+    <text           	class="com.foundercy.pf.control.FTextField"/>
+    <textarea       	class="com.foundercy.pf.control.FTextArea"/>
+    <int            	class="com.foundercy.pf.control.FIntegerField"/>
+    <decimal        	class="com.foundercy.pf.control.FDecimalField"/>
+    <checkbox       	class="com.foundercy.pf.control.FCheckBox"/>
+    <date           	class="com.foundercy.pf.control.FTimeChooser"/>
+    <datetime       	class="com.foundercy.pf.control.FTimeChooser"/>
+    <datetime2       	class="com.foundercy.pf.control.FDateTimeChooser"/>
+    <radio          	class="com.foundercy.pf.control.FRadioGroup"/>
+    <blank          	class="com.foundercy.pf.control.FBlankPanel"/>
+    <table          	class="com.foundercy.pf.control.table.FTable"/>
+    <column         	class="com.foundercy.pf.control.table.FBaseTableColumn"/>
+    <columngroup        class="com.foundercy.pf.control.table.ColumnGroup"/>
+    <tree           	class="com.foundercy.pf.control.FTree"/>
+    <card           	class="com.foundercy.pf.dictionary.control.FCard"/>
+	<panel          	class="com.foundercy.pf.control.FPanel"/>
+	<bill           	class="com.foundercy.pf.dictionary.control.FBill"/>
+	<split          	class="com.foundercy.pf.control.FSplitPane"/>
+	<button         	class="com.foundercy.pf.control.FButton"/>
+	<toolbar        	class="com.foundercy.pf.control.FToolBar"/>
+	<tbseparator    	class="com.foundercy.pf.control.FToolBar$FToolBarSeparator"/>
+	<pageroller     	class="com.foundercy.pf.control.FPageRoller"/>
+	<line           	class="com.foundercy.pf.control.FEtchedLine"/>
+	<flpanel 	    	class="com.foundercy.pf.control.FFlowLayoutPanel"/>
+	<dialog 	    	class="com.foundercy.pf.control.FDialog"/>
+	<label 	  	    	class="com.foundercy.pf.control.FLabel"/>
+	<titledpane     	class="com.foundercy.pf.control.FTitledPanel"/>
+	<tabbedpane     	class="com.foundercy.pf.control.FTabbedPane"/>
+	<roletreeassist     class="com.foundercy.pf.framework.systemmanager.navimanager.ui.RoleTreeAssistInput"/>
+	<list          		class="com.foundercy.pf.control.FList"/>
+	<scrollpane 		class="com.foundercy.pf.control.FScrollPane"/>
+	<pwtext           	class="com.foundercy.pf.control.FPasswordField"/>
+	<moduletreeassist   class="com.foundercy.pf.framework.systemmanager.sysmenu.ui.ModuleTreeAssistInput"/>
+	<menutreeassist   	class="com.foundercy.pf.framework.systemmanager.navimanager.ui.MenuTreeAssistInput"/>
+	<detailpanel	    class="com.foundercy.pf.gl.viewer.FDetailPanel"/>
+	<inputpanel   		class="com.foundercy.pf.gl.viewer.FInputPanel"/>
+	<querypanel   		class="com.foundercy.pf.gl.viewer.FQueryPanel"/>
+	<listpanel  		class="com.foundercy.pf.gl.viewer.FListPanel"/>
+	<toolbarpanel   	class="com.foundercy.pf.gl.viewer.FToolBarPanel"/>
+	<image  			class="com.foundercy.pf.control.FImageChooser"/>
+	<dropDownButton 	class="com.foundercy.pf.control.FDropDownButton"/>
+	<view               class="com.foundercy.pf.control.ViewTextArea"/>
+	<usertreeassist   	class="com.foundercy.pf.framework.systemmanager.log.ui.UserTreeAssistInput"/>
+	<doubletime      	class="com.foundercy.pf.control.FDoubleTimeChooser"/>
+	<doubledecimal   class="com.foundercy.pf.control.FDoubleDecimalField"/>
+
+ </control_config>
+

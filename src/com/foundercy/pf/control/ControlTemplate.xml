@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="gb2312"?>
+<template>
+	<text id="ftf_temp" cols="1" rows="1" />
+	<text id="ftf_temp_02" cols="2" rows="2" />
+	<textarea id="fta_temp" cols="2" rows="2" />
+</template>
