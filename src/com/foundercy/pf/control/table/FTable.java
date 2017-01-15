@@ -287,7 +287,6 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
 //    public void delPickColumnReplaceListener(IPickColumnReplaceListener listener) {
 //        iPickColumnReplaceListeners.remove(listener);
 //    }
-
     public void addPickQueryExListener(IPickQueryExListener listener) {
         iPickQueryExListeners.add(listener);
     }
@@ -426,15 +425,17 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     }
 
     /**
-     * 
+     *
      * @param cs
      * @param entity_caption:表的描述
      * @param entity_name：表名
-     * @param para：参数，用于查询关系定位；
-     * 比如查询实体为A01，要增加的表为C21，addQueryEntity(C21.class, "工资主表", "C21", "2"); 其中2表示A01包含一个C21的属性
-     * 比如查询实体为A01，要增加的表为C21，addQueryEntity(C21.class, "工资主表", "C21", "4"); 其中4表示C21包含A01的主键
-     * 比如查询实体为C21，要增加的表为A01，addQueryEntity(A01.class, "人员信息", "A01", "5"); 其中5表示查询表包含增加的表的主键
-     * 比如查询实体为Dept，要增加的表为C21，addQueryEntity(C21.class, "工资主表", "A01;C21", "3;4"); 其中4表示增加的表包含A01的主键，3表示A01包含一个Dept的属性
+     * @param para：参数，用于查询关系定位； 比如查询实体为A01，要增加的表为C21，addQueryEntity(C21.class,
+     * "工资主表", "C21", "2"); 其中2表示A01包含一个C21的属性
+     * 比如查询实体为A01，要增加的表为C21，addQueryEntity(C21.class, "工资主表", "C21", "4");
+     * 其中4表示C21包含A01的主键 比如查询实体为C21，要增加的表为A01，addQueryEntity(A01.class, "人员信息",
+     * "A01", "5"); 其中5表示查询表包含增加的表的主键
+     * 比如查询实体为Dept，要增加的表为C21，addQueryEntity(C21.class, "工资主表", "A01;C21",
+     * "3;4"); 其中4表示增加的表包含A01的主键，3表示A01包含一个Dept的属性
      *
      */
     private void addQueryEntity(Class cs, String entity_caption, String entity_name, String para) {
@@ -455,6 +456,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
 
     /**
      * 用于初始化网格显示界面
+     *
      * @param all_fields：允许显示的所有字段
      * @param default_fields：默认显示的字段
      * @param module_code：网格模块标识
@@ -656,23 +658,25 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
 
     /**
      * 该方法用于获取关于当前列的检索SQL
+     *
      * @param start_name：表的别名
      * @param val：检索值
      * @return：检索SQL
      */
     public String getQuickSearchSQL(String start_name, String val) {
-        return getQuickSearchSQL(start_name,val,false);
+        return getQuickSearchSQL(start_name, val, false);
     }
-    
-     /**
+
+    /**
      * 该方法用于获取关于当前列的检索SQL(可以精确检索，也可以模糊检索)
+     *
      * @param start_name：表的别名
      * @param val：检索值
      * @return：检索SQL
      */
-    public String getQuickSearchSQL(String start_name, String val,boolean jc_flag) {
+    public String getQuickSearchSQL(String start_name, String val, boolean jc_flag) {
         String bd_str = "like";
-        if(jc_flag){
+        if (jc_flag) {
             bd_str = "=";
         }
         String hql = "";
@@ -700,9 +704,9 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
                 return "1=0";
             }
             String code_type_name = cur_info.getCode_type_name();
-            hql += start_name + "." + field + " in (select code_id from Code where code_type='" + code_type_name + "' and (code_name "+bd_str+" '" + val + "' or pym "+bd_str+" '" + val + "'))";
+            hql += start_name + "." + field + " in (select code_id from Code where code_type='" + code_type_name + "' and (code_name " + bd_str + " '" + val + "' or pym " + bd_str + " '" + val + "'))";
         } else {
-            hql += "upper(" + start_name + "." + field + ") "+bd_str+" '" + val + "'";
+            hql += "upper(" + start_name + "." + field + ") " + bd_str + " '" + val + "'";
         }
         return hql;
     }
@@ -846,11 +850,11 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
         }
         this.refreshListSelectionListener();
     }
-    
-    public void addObject(Object obj,int index) {
+
+    public void addObject(Object obj, int index) {
         //用于添加对象到指定行
         this.removeAllListSelectionListener();
-        model.addObject(obj,index);
+        model.addObject(obj, index);
         updateRowNumberColumn();
         this.setRowSelectionInterval(index, index);
         this.refreshListSelectionListener();
@@ -1306,6 +1310,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
 
     /**
      * 用于设置单列的对齐方式
+     *
      * @param column
      * @param alignment
      */
@@ -1323,6 +1328,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
 
     /**
      * 用于数组型数据显示，支持多表头，表头通过传入参数生成
+     *
      * @param fields：如果field_keys为null,则该list作为显示表头，如果不为null,则该list 作为表头索引
      * @param field_keys：所有表头数据
      */
@@ -1594,7 +1600,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
         String field_type = cs.getField_type().toLowerCase();
         String sumEntityName = entityName.equals("") ? "" : (entityName + ".");
         if (field_type.equals("int") || field_type.equals("integer")) {
-            sql = ",cast(" + (cs.getType() == 0 ? "sum" : "avg") + "(" + DbUtil.getNull_strForDB(UserContext.sql_dialect) + "(" + sumEntityName + fieldName + ",0)) as "+DbUtil.getInteger_strForDB(UserContext.sql_dialect)+") as ed" + col;
+            sql = ",cast(" + (cs.getType() == 0 ? "sum" : "avg") + "(" + DbUtil.getNull_strForDB(UserContext.sql_dialect) + "(" + sumEntityName + fieldName + ",0)) as " + DbUtil.getInteger_strForDB(UserContext.sql_dialect) + ") as ed" + col;
         } else {
             sql = "," + (cs.getType() == 0 ? "sum" : "avg") + "(" + DbUtil.getNull_strForDB(UserContext.sql_dialect) + "(" + sumEntityName + fieldName + ",0)) as ed" + col;
         }
@@ -1603,6 +1609,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
 
     /**
      * 设置查询Item的enable属性
+     *
      * @param enable
      */
     public void setQueryItemEnable(boolean enable) {
@@ -1611,6 +1618,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
 
     /**
      * 设置显示方案Item的enable属性
+     *
      * @param enable
      */
     public void setFieldItemEnable(boolean enable) {
@@ -1619,6 +1627,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
 
     /**
      * 设置替换Item的enable属性
+     *
      * @param enable
      */
     public void setReplaceItemEnable(boolean enable) {
@@ -1627,6 +1636,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
 
     /**
      * 设置导出Item的enable属性
+     *
      * @param enable
      */
     public void setExportItemEnable(boolean enable) {
@@ -1844,7 +1854,9 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
          *
          * @author jerry
          */
-        /** ************************begin*********************** */
+        /**
+         * ************************begin***********************
+         */
         this.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -1888,8 +1900,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
             /**
              * 鼠标单击表格行，切换选择框的选中状态
              *
-             * @param table
-             *            被单击的表格
+             * @param table 被单击的表格
              */
             private void clickRow(JTable table) {
 
@@ -1919,7 +1930,9 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
                      *
                      * @author jerry
                      */
-                    /** ******************begin****************** */
+                    /**
+                     * ******************begin******************
+                     */
                     if (v != null && !(v instanceof SumRowValueTypes)) {
                         if (!v.equals("")) {
                             checkBoxValue = new Boolean(true);
@@ -1932,7 +1945,9 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
                     if (v == null && !(v instanceof SumRowValueTypes) && isCheck) {
                         checkBoxValue = new Boolean(false);
                     }
-                    /** ******************end******************** */
+                    /**
+                     * ******************end********************
+                     */
                 }
                 if (checkBoxValue != null) {
                     setValueAt(new Boolean(!checkBoxValue.booleanValue()),
@@ -2000,7 +2015,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
                             // lgc add start
                             if (tempCol == sortCol && sortCol.isSortable()) {
                                 String id = tempCol.getId();
-                                System.out.println("id "+id);
+                                System.out.println("id " + id);
                                 ShowScheme ss = new ShowScheme();
                                 ShowSchemeOrder sso = new ShowSchemeOrder();
                                 sso.setShowScheme(ss);
@@ -2028,11 +2043,14 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
                 }
             }
         });
-        /** ************************end************************* */
+        /**
+         * ************************end*************************
+         */
     }
 
     /**
      * 该方法用于设置网格回车键移动方向，并改变菜单图标
+     *
      * @param way：Down：向下；Right：向右；默认Right
      * @param rightItem：向右菜单
      * @param downItem：向下菜单
@@ -2079,7 +2097,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
             @Override
             public void pickReplace() {
                 cur_hql = null;
-                List<String> keys=FTable.this.getAllKeys();
+                List<String> keys = FTable.this.getAllKeys();
                 FTable.this.setObjects(keys);
 //                for (IPickColumnReplaceListener listener : iPickColumnReplaceListeners) {
 //                    listener.pickReplace();
@@ -2137,6 +2155,18 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
         }
     }
 
+    public void exportData(String title, String defaultName) {
+        if (this.model.getEntityClass() != null) {
+            ExportDialog eDlg = new ExportDialog(this.model.getEntityClass(), this, this.useModuleCode, this.all_fields, title, defaultName);
+            ContextManager.locateOnMainScreenCenter(eDlg);
+            eDlg.setVisible(true);
+        } else {
+            ExportDataDialog dlg = new ExportDataDialog(JOptionPane.getFrameForComponent(this), this, title, defaultName);
+            ContextManager.locateOnMainScreenCenter(dlg);
+            dlg.setVisible(true);
+        }
+    }
+
     private void buildViewColumn(List<String> hide_columns) {
         miShowCol.removeAll();
         for (final String column_name : hide_columns) {
@@ -2175,8 +2205,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 构造函数
      *
-     * @param allowMultiChoice
-     *            是否允许进行多选
+     * @param allowMultiChoice 是否允许进行多选
      */
     public FTable(boolean allowMultiChoice) {
         // super();
@@ -2214,8 +2243,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 设置是否支持多选
      *
-     * @param isCheck
-     *            true为支持多选，false为不支持
+     * @param isCheck true为支持多选，false为不支持
      */
     public void setIsCheck(boolean isCheck) {
         this.isCheck = isCheck;
@@ -2241,8 +2269,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 增加一列
      *
-     * @param column
-     *            表格列对象
+     * @param column 表格列对象
      */
     @Override
     public void addColumn(FBaseTableColumn column) {
@@ -2279,8 +2306,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 增加多表头
      *
-     * @param columnGroup
-     *            多表头列
+     * @param columnGroup 多表头列
      */
     public void addColumnGroup(ColumnGroup columnGroup) {
         // 将多表头中包含的单列插入到表中
@@ -2302,8 +2328,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 将多表头中包含的单列插入到表中
      *
-     * @param columnGroup
-     *            多表头
+     * @param columnGroup 多表头
      */
     public void addColFromColGroup(ColumnGroup columnGroup) {
         // 取得多表头中包含的子控件
@@ -2328,24 +2353,23 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 删除表格的一列信息
      *
-     * @param column
-     *            列信息
+     * @param column 列信息
      */
     /*
-    public void removeColumn(FBaseTableColumn column) {
-    if (this.getModel() != null) {
-    //			FBaseTableColumn[] cols = column.getAllSubTableColumns();
-    //			for (int i = 0; i < cols.length; i++) {
-    //				FTableColumnItem item = new FTableColumnItem();
-    //				item.setId(cols[i].getId());
-    //				item.setTitle(cols[i].getTitle());
-    //				item.setEditable(cols[i].isEditable());
-    //				((FTableModel) this.getModel()).removeColumn(item);
-    //			}
-    //
-    super.removeColumn(column);
-    }
-    }
+     public void removeColumn(FBaseTableColumn column) {
+     if (this.getModel() != null) {
+     //			FBaseTableColumn[] cols = column.getAllSubTableColumns();
+     //			for (int i = 0; i < cols.length; i++) {
+     //				FTableColumnItem item = new FTableColumnItem();
+     //				item.setId(cols[i].getId());
+     //				item.setTitle(cols[i].getTitle());
+     //				item.setEditable(cols[i].isEditable());
+     //				((FTableModel) this.getModel()).removeColumn(item);
+     //			}
+     //
+     super.removeColumn(column);
+     }
+     }
      */
     /**
      * 清空表数据
@@ -2357,8 +2381,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 向表格载入数据
      *
-     * @param dataList
-     *            数据信息数组
+     * @param dataList 数据信息数组
      */
     public void setData(List dataList) {
         model.setData(dataList, isCheck);
@@ -2445,7 +2468,8 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 获得表格中复选框选中的数据，可以进行多选，所以返回多条数据。
      *
-     *  此方法已经废弃，请使用getSelectedDataByCheckBox();
+     * 此方法已经废弃，请使用getSelectedDataByCheckBox();
+     *
      * @return 返回选中的数据，如果选中数据为空，返回一个Size为0的List
      */
     public List getSelectedData() {
@@ -2565,8 +2589,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 得到某一行的数据
      *
-     * @param index
-     *            指定某一行
+     * @param index 指定某一行
      *
      * @return 数据Map
      */
@@ -2586,8 +2609,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 在表格的指定位置后增加一个空行
      *
-     * @param index
-     *            制定的行号
+     * @param index 制定的行号
      */
     public void addBlankRow(int index) {
         model.addBlankRow(index);
@@ -2596,8 +2618,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 在当前表格的末尾增加一行值
      *
-     * @param map
-     *            行信息值对
+     * @param map 行信息值对
      */
     public void addRow(Map map) {
         model.addRow(map);
@@ -2606,10 +2627,8 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 增加一行的值
      *
-     * @param map
-     *            行信息值对
-     * @param index
-     *            加入的位置
+     * @param map 行信息值对
+     * @param index 加入的位置
      */
     public void addRow(Map map, int index) {
         model.addRow(map, index);
@@ -2618,10 +2637,8 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 修改一行
      *
-     * @param map
-     *            新的Map
-     * @param index
-     *            位置
+     * @param map 新的Map
+     * @param index 位置
      */
     public void modifyRow(Map map, int index) {
         model.modifyRow(map, index);
@@ -2630,8 +2647,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 删除一行的值
      *
-     * @param index
-     *            待删除位置的序号
+     * @param index 待删除位置的序号
      */
     public void deleteRow(int index) {
         if (index == -1) {
@@ -2651,10 +2667,8 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 设置指定行的复选框是否被选中
      *
-     * @param rowIndex
-     *            指点的行数
-     * @param isSelected
-     *            是否被选中
+     * @param rowIndex 指点的行数
+     * @param isSelected 是否被选中
      */
     public void setCheckBoxSelectedAtRow(int rowIndex, boolean isSelected) {
         model.setCheckBoxSelectedAtRow(rowIndex, isSelected);
@@ -2678,8 +2692,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 根据id获取控件
      *
-     * @param id
-     *            控件id
+     * @param id 控件id
      *
      * @return 控件
      *
@@ -2703,8 +2716,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 设置父控件
      *
-     * @param parent
-     *            父控件
+     * @param parent 父控件
      *
      */
     @Override
@@ -2715,8 +2727,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 增加子控件
      *
-     * @param control
-     *            FPanel中的子控件
+     * @param control FPanel中的子控件
      */
     @Override
     public void addControl(Control control) {
@@ -2733,10 +2744,8 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 增加子控件,同时增加约束
      *
-     * @param control
-     *            子控件
-     * @param contraint
-     *            控件承载容器
+     * @param control 子控件
+     * @param contraint 控件承载容器
      */
     @Override
     public void addControl(Control control, Object contraint) {
@@ -2752,8 +2761,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 设置标题
      *
-     * @param title
-     *            标题
+     * @param title 标题
      *
      */
     public void setTitle(String title) {
@@ -2773,8 +2781,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 重新设置列表头
      *
-     * @param newCols
-     *            新的列对象数组
+     * @param newCols 新的列对象数组
      */
     public void resetHeader(List newCols) {
         if (newCols != null) {
@@ -2789,8 +2796,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 重新设置表头
      *
-     * @param newCols
-     *            表头列表
+     * @param newCols 表头列表
      *
      */
     public void resetHeader(FBaseTableColumn[] newCols) {
@@ -2798,7 +2804,6 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
         // FTableColumnItem chkColItem = removeAllSubControls();
         // List colItems = ((FTableModel)getModel()).getColumnList();
         // if (chkColItem != null) colItems.add(chkColItem);
-
         boolean isExistChkCol = false;
         for (int i = 0; newCols != null && i < newCols.length; i++) {
             FBaseTableColumn col = newCols[i];
@@ -2861,8 +2866,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 是否自动本地记忆处理
      *
-     * @param isLocalmemo
-     *            true－是，false－否
+     * @param isLocalmemo true－是，false－否
      *
      */
     public void setLocalmemo(boolean isLocalmemo) {
@@ -2881,8 +2885,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
     /**
      * 设置表格列的默认显示格式
      *
-     * @param defaultXML
-     *            显示格式
+     * @param defaultXML 显示格式
      */
     public void setDefaultXML(String defaultXML) {
         this.defaultXML = defaultXML;
@@ -2890,6 +2893,7 @@ public class FTable extends FBaseTable implements Control, Compound, IModuleCode
 
     /**
      * 该方法用于根据step值向上/下移动当前行
+     *
      * @param step：1：向下一行；-1：向上一行
      */
     public void moveRowPosition(int step) {

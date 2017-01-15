@@ -37,6 +37,13 @@ public class DateUtil {
     public static boolean isValidYear(String s) {
         return isValidDate(s, "yyyy");
     }
+    
+    
+  public static String getDateWeek(Date d)
+  {
+    SimpleDateFormat f = new SimpleDateFormat("E");
+    return f.format(d);
+  }
 
     //验证日期合法性
     public static boolean isValidDate(String s) {

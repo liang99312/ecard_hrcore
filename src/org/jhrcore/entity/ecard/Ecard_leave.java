@@ -29,7 +29,9 @@ public class Ecard_leave extends Model implements Serializable, IKey, KeyInterfa
     public String ecard_leave_name;
     @FieldAnnotation(visible = true, displayName = "日期")
     public Date ecard_leave_date;
-    @FieldAnnotation(visible=false, displayName="标识")
+    @FieldAnnotation(visible = true, displayName = "星期")
+    public String ecard_leave_week;
+    @FieldAnnotation(visible = false, displayName = "标识")
     public String ecard_leave_flag;
     @FieldAnnotation(visible = true, displayName = "备注")
     public String ecard_leave_remark;
@@ -43,18 +45,26 @@ public class Ecard_leave extends Model implements Serializable, IKey, KeyInterfa
     public void setEcard_leave_key(String ecard_leave_key) {
         this.ecard_leave_key = ecard_leave_key;
     }
-    
-    public String getEcard_leave_flag()
-  {
-    return this.ecard_leave_flag;
-  }
-  
-  public void setEcard_leave_flag(String ecard_leave_flag)
-  {
-    String old = this.ecard_leave_flag;
-    this.ecard_leave_flag = ecard_leave_flag;
-    this.firePropertyChange("ecard_leave_flag", old, ecard_leave_flag);
-  }
+
+    public String getEcard_leave_flag() {
+        return this.ecard_leave_flag;
+    }
+
+    public void setEcard_leave_flag(String ecard_leave_flag) {
+        String old = this.ecard_leave_flag;
+        this.ecard_leave_flag = ecard_leave_flag;
+        this.firePropertyChange("ecard_leave_flag", old, ecard_leave_flag);
+    }
+
+    public String getEcard_leave_week() {
+        return this.ecard_leave_week;
+    }
+
+    public void setEcard_leave_week(String ecard_leave_week) {
+        String old = this.ecard_leave_week;
+        this.ecard_leave_week = ecard_leave_week;
+        firePropertyChange("ecard_leave_week", old, ecard_leave_week);
+    }
 
     public Date getEcard_leave_date() {
         return ecard_leave_date;

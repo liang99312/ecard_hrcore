@@ -35,6 +35,8 @@ public class Ecard extends Model implements Serializable, IObjectAttribute, KeyI
     public String ecard_qq;
     @FieldAnnotation(visible = true, displayName = "卡号", groupName = "Default", not_null = true)
     public String ecard_code;
+    @FieldAnnotation(visible = true, displayName = "刷卡管理员", groupName = "Default", not_null = true)
+    public String ecard_manager;
     @FieldAnnotation(visible = true, displayName = "用卡人", groupName = "Default", not_null = true)
     public String ecard_user;
     @FieldAnnotation(visible = true, displayName = "发卡银行", groupName = "Default", not_null = true)
@@ -106,6 +108,16 @@ public class Ecard extends Model implements Serializable, IObjectAttribute, KeyI
         String old = this.ecard_code;
         this.ecard_code = ecard_code;
         this.firePropertyChange("ecard_code", old, ecard_code);
+    }
+
+    public String getEcard_manager() {
+        return ecard_manager;
+    }
+
+    public void setEcard_manager(String ecard_manager) {
+        String old = this.ecard_manager;
+        this.ecard_manager = ecard_manager;
+        this.firePropertyChange("ecard_manager", old, ecard_manager);
     }
 
     public String getEcard_name() {
@@ -307,7 +319,7 @@ public class Ecard extends Model implements Serializable, IObjectAttribute, KeyI
         this.m_shangxian = m_shangxian;
         this.firePropertyChange("m_shangxian", old, m_shangxian);
     }
-    
+
     public Integer getM_xiaxian() {
         return m_xiaxian;
     }

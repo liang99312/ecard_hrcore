@@ -67,6 +67,7 @@ public class ExportDataDialog extends javax.swing.JDialog {
     private HashSet<String> exist_fields = new HashSet<String>();
     private ShowFieldTreeModel model;
     private Logger log = Logger.getLogger(ExportDataDialog.class.getName());
+    private String defaultName = "";
 
     /** Creates new form ExportDataDialog */
     public ExportDataDialog(java.awt.Frame parent, FTable ftable) {
@@ -80,6 +81,22 @@ public class ExportDataDialog extends javax.swing.JDialog {
         initOthers();
         setupEvents();
     }
+    
+    public ExportDataDialog(java.awt.Frame parent, FTable ftable, String title, String defaultName)
+  {
+    super(parent);
+    setTitle("—°‘Ò ‰≥ˆ¡–");
+    this.fTable = ftable;
+    this.fields = ftable.getFields();
+    this.field_keys = ftable.getField_keys();
+    setDefaultCloseOperation(2);
+    initComponents();
+    initOthers();
+    setupEvents();
+    System.out.println(title);
+    this.jtfTitle.setText(title);
+    this.defaultName = defaultName;
+  }
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -309,7 +326,7 @@ public class ExportDataDialog extends javax.swing.JDialog {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                exportExcel();
+                ExportDataDialog.this.exportExcel(ExportDataDialog.this.defaultName);
             }
         });
         btnCancel.addActionListener(new ActionListener() {
@@ -368,6 +385,127 @@ public class ExportDataDialog extends javax.swing.JDialog {
             }
         });
     }
+    
+    private void exportExcel(String defaultName)
+  {
+    File file = FileChooserUtil.getXLSExportFile(CommMsg.SELECTXLSFILE_MESSAGE, defaultName);
+    if (file == null) {
+      return;
+    }
+    WritableCellFormat textFormart = new WritableCellFormat();
+    try
+    {
+      textFormart.setBorder(Border.ALL, BorderLineStyle.THIN, Colour.BLACK);
+    }
+    catch (WriteException ex)
+    {
+      this.log.error(ex);
+    }
+    Hashtable<String, Integer> mergeCell_keys = new Hashtable();
+    for (TempFieldInfo tfi : this.right_list) {
+      if (!tfi.getEntity_name().equals(""))
+      {
+        Integer i = (Integer)mergeCell_keys.get(tfi.getEntity_name());
+        if (i == null) {
+          i = Integer.valueOf(0);
+        }
+        Integer localInteger1 = i;Integer localInteger2 = i = Integer.valueOf(i.intValue() + 1);
+        mergeCell_keys.put(tfi.getEntity_name(), i);
+      }
+    }
+    int len = 0;
+    for (TempFieldInfo tfi : this.right_list) {
+      if (tfi.getEntity_name().equals("")) {
+        len++;
+      }
+    }
+    for (Integer key_len : mergeCell_keys.values()) {
+      len += key_len.intValue();
+    }
+    try
+    {
+      WritableWorkbook workbook = Workbook.createWorkbook(file);
+      WritableSheet sheet = workbook.createSheet("First Sheet", 0);
+      WritableFont wfc = new WritableFont(WritableFont.ARIAL, 20, WritableFont.BOLD, false, UnderlineStyle.NO_UNDERLINE, Colour.BLACK);
+      
+      WritableCellFormat wcfFc = new WritableCellFormat(wfc);
+      wcfFc.setAlignment(Alignment.CENTRE);
+      wcfFc.setBorder(Border.ALL, BorderLineStyle.THIN, Colour.BLACK);
+      Label label = new Label(0, 0, this.jtfTitle.getText(), wcfFc);
+      WritableCellFeatures cellFeatures = new WritableCellFeatures();
+      label.setCellFeatures(cellFeatures);
+      sheet.addCell(label);
+      sheet.mergeCells(0, 0, Math.max(len - 1, 0), 0);
+      
+      int j = 0;
+      wfc = new WritableFont(WritableFont.ARIAL, 12, WritableFont.BOLD, false, UnderlineStyle.NO_UNDERLINE, Colour.BLACK);
+      
+      wcfFc = new WritableCellFormat(wfc);
+      wcfFc.setAlignment(Alignment.CENTRE);
+      wcfFc.setBorder(Border.ALL, BorderLineStyle.THIN, Colour.BLACK);
+      int height = 1;
+      if (mergeCell_keys.size() > 0) {
+        height = 2;
+      }
+      for (TempFieldInfo tfi : this.right_list)
+      {
+        if (tfi.getEntity_name().equals(""))
+        {
+          label = new Label(j, 1, tfi.getCaption_name(), wcfFc);
+          cellFeatures = new WritableCellFeatures();
+          label.setCellFeatures(cellFeatures);
+          sheet.addCell(label);
+          sheet.mergeCells(j, 1, j, height);
+        }
+        else
+        {
+          Integer key_len = (Integer)mergeCell_keys.get(tfi.getEntity_name());
+          if (key_len != null)
+          {
+            label = new Label(j, 1, tfi.getEntity_caption(), wcfFc);
+            cellFeatures = new WritableCellFeatures();
+            label.setCellFeatures(cellFeatures);
+            sheet.addCell(label);
+            sheet.mergeCells(j, 1, j + ((Integer)mergeCell_keys.get(tfi.getEntity_name())).intValue() - 1, 1);
+            mergeCell_keys.remove(tfi.getEntity_name());
+          }
+          label = new Label(j, 2, tfi.getCaption_name(), wcfFc);
+          cellFeatures = new WritableCellFeatures();
+          label.setCellFeatures(cellFeatures);
+          sheet.addCell(label);
+        }
+        j++;
+      }
+      int i = height + 1;
+      for (Object obj : this.fTable.getObjects())
+      {
+        int col = 0;
+        Object[] objs = (Object[])obj;
+        for (TempFieldInfo exportDetail : this.right_list)
+        {
+          Object tmp_obj = objs[exportDetail.getOrder_no()];
+          label = new Label(col, i, tmp_obj == null ? "" : tmp_obj.toString(), textFormart);
+          sheet.addCell(label);
+          col++;
+        }
+        i++;
+      }
+      workbook.write();
+      workbook.close();
+      dispose();
+      if (this.jcbOpen.isSelected()) {
+        Runtime.getRuntime().exec("cmd /c \"" + file.getPath() + "\"");
+      }
+    }
+    catch (WriteException ex)
+    {
+      this.log.error(ex);
+    }
+    catch (IOException ex)
+    {
+      this.log.error(ex);
+    }
+  }
 
     private void exportExcel() {
         File file = FileChooserUtil.getXLSExportFile(CommMsg.SELECTXLSFILE_MESSAGE);

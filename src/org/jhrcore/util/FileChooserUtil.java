@@ -54,6 +54,10 @@ public class FileChooserUtil {
         return getSingleFile(title, xlsFilter);
     }
 
+    public static File getXLSFile(Object title, String defaultName) {
+        return getSingleFile(title, xlsFilter, defaultName);
+    }
+
     public static File getDBFFile(Object title) {
         return getSingleFile(title, dbfFilter);
     }
@@ -81,6 +85,11 @@ public class FileChooserUtil {
     public static File getXLSExportFile(Object title) {
         return getFileForExport(title, "xls");
     }
+    
+    public static File getXLSExportFile(Object title, String name)
+  {
+    return getFileForExport(title, "xls", name);
+  }
 
     public static File getDBFExportFile(Object title) {
         return getFileForExport(title, "dbf");
@@ -115,6 +124,35 @@ public class FileChooserUtil {
         } else if ("zip".equals(fileType)) {
             return getZIPFile(title);
         } else if ("xml".equals(fileType)) {
+            return getXMLFile(title);
+        }
+        return getSingleFile(title, null);
+    }
+
+    public static File getFile(Object title, String fileType, String defaultName) {
+        fileType = fileType.toLowerCase();
+        if ("pdf".equals(fileType)) {
+            return getPDFFile(title);
+        }
+        if ("xls".equals(fileType)) {
+            return getXLSFile(title, defaultName);
+        }
+        if ("doc".equals(fileType)) {
+            return getDOCFile(title);
+        }
+        if ("cpt".equals(fileType)) {
+            return getCPTFile(title);
+        }
+        if ("pic".equals(fileType)) {
+            return getPICFile(title);
+        }
+        if ("dbf".equals(fileType)) {
+            return getDBFFile(title);
+        }
+        if ("zip".equals(fileType)) {
+            return getZIPFile(title);
+        }
+        if ("xml".equals(fileType)) {
             return getXMLFile(title);
         }
         return getSingleFile(title, null);
@@ -172,6 +210,37 @@ public class FileChooserUtil {
         return file;
     }
 
+    public static File getFileForExport(Object title, String fileType, String defaultName) {
+        File file = getFile(title, fileType, defaultName);
+        if (file == null || SysUtil.objToStr(fileType).equals("")) {
+            return file;
+        }
+        String file_path = file.getPath();
+        fileType = fileType.toLowerCase();
+
+        if (fileType.equals("pic")) {
+            if (file.getName().contains(".")) {
+                String type = file.getName().substring(file.getName().lastIndexOf(".") + 1).toLowerCase();
+                if (!(type.equals("jpg") || type.equals("png") || type.equals("gif"))) {
+                    file_path = file_path + ".jpg";
+                }
+            } else {
+                file_path = file_path + ".jpg";
+            }
+        } else if (!file_path.toLowerCase().endsWith("." + fileType)) {
+            file_path = file_path + "." + fileType;
+        }
+        file = new File(file_path);
+        if (file.isFile()) {
+            if (file.exists()) {
+                if (MsgUtil.showNotConfirmDialog("您选择的文件已存在，是否覆盖?")) {
+                    return null;
+                }
+            }
+        }
+        return file;
+    }
+
     public static File getSingleFile(Object title, ChooseFileFilter filter) {
         JFileChooser chooser = getFileChooser();
         chooser.setDialogTitle(title + "");
@@ -186,6 +255,26 @@ public class FileChooserUtil {
         chooser.setMultiSelectionEnabled(false);
         int i = chooser.showSaveDialog(null);
         if (i != JFileChooser.APPROVE_OPTION) {
+            return null;
+        }
+        return chooser.getSelectedFile();
+    }
+
+    public static File getSingleFile(Object title, ChooseFileFilter filter, String defaultName) {
+        JFileChooser chooser = getFileChooser();
+        chooser.setDialogTitle(title + "");
+        FileFilter[] ffs = chooser.getChoosableFileFilters();
+        for (FileFilter ff : ffs) {
+            chooser.removeChoosableFileFilter(ff);
+        }
+        chooser.setAcceptAllFileFilterUsed(filter == null);
+        if (filter != null) {
+            chooser.setFileFilter(filter);
+        }
+        chooser.setMultiSelectionEnabled(false);
+        chooser.setSelectedFile(new File(defaultName));
+        int i = chooser.showSaveDialog(null);
+        if (i != 0) {
             return null;
         }
         return chooser.getSelectedFile();

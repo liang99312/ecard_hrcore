@@ -97,6 +97,7 @@ public class ExportDialog extends javax.swing.JDialog {
     private Logger log = Logger.getLogger(ExportDialog.class.getName());
     private Hashtable<String, String> oname_table = new Hashtable<String, String>();//其他表名
     private Hashtable<String, String> zhu_table = new Hashtable<String, String>();
+    private String defaultName = "";
 
     private void setCurExportScheme(ExportScheme curExportScheme, List<TempFieldInfo> all_fields) {
         this.curExportScheme = curExportScheme;
@@ -153,6 +154,20 @@ public class ExportDialog extends javax.swing.JDialog {
         initOthers();
         setupEvents();
     }
+    
+    public ExportDialog(Class entity_class, FTable fTable, String module_code, List<TempFieldInfo> fields, String title, String defaultName)
+  {
+    setTitle("选择输出字段");
+    this.fTable = fTable;
+    this.all_fields = fields;
+    setDefaultCloseOperation(2);
+    this.cur_class = entity_class;
+    initComponents();
+    initOthers();
+    setupEvents();
+    this.jtfTitle.setText(title);
+    this.defaultName = defaultName;
+  }
 
     protected void refreshScheme() {
         curExportScheme.setEntity_name(cur_class.getSimpleName());
@@ -787,7 +802,7 @@ public class ExportDialog extends javax.swing.JDialog {
 
     private void export() {
         String type = jcbType.getSelectedItem().toString();
-        File file = FileChooserUtil.getFileForExport(CommMsg.SELECTFILE_MESSAGE, type);
+        File file = FileChooserUtil.getFileForExport(CommMsg.SELECTFILE_MESSAGE, type,this.defaultName);
         if (file == null) {
             return;
         }
