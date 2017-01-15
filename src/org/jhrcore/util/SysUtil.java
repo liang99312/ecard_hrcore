@@ -47,7 +47,7 @@ import org.jhrcore.msg.CommMsg;
 import org.jhrcore.rebuild.EntityBuilder;
 
 /**
- * 
+ *
  * @author yangzhou
  */
 public class SysUtil {
@@ -62,6 +62,7 @@ public class SysUtil {
 
     /**
      * 该方法用于获取快速定位时的匹配语句，主要处理占位符*的问题，输入A，不存在*时，为 like '%A%',否则，like 'A'
+     *
      * @param text:传入的搜索文本
      * @return：处理过的匹配语句
      */
@@ -75,6 +76,12 @@ public class SysUtil {
         if (!need_change) {
             result = "%" + result + "%";
         }
+        return result;
+    }
+
+    public static double round(double value, int xs) {
+        BigDecimal b = new BigDecimal(value);
+        double result = b.setScale(xs, 4).doubleValue();
         return result;
     }
 
@@ -97,6 +104,7 @@ public class SysUtil {
 
     /**
      * 该方法用于获取快速定位时的匹配SQL
+     *
      * @param fields:匹配的字段数组
      * @param text:传入的搜索文本
      * @return：处理过的匹配SQL
@@ -187,6 +195,7 @@ public class SysUtil {
 
     /**
      * 该方法用于获得新增部门工资体系时的paysystem_no，即现有数据库最大的paysystem_no+1;
+     *
      * @return
      */
     public static int getNewCalSystemNo() {
@@ -201,6 +210,7 @@ public class SysUtil {
 
     /**
      * 该方法用于获得新增薪酬体系时的paysystem_no，即现有数据库最大的paysystem_no+1;
+     *
      * @return
      */
     public static int getNewPaySystemNo() {
@@ -225,6 +235,7 @@ public class SysUtil {
 
     /**
      * 检测输入的字符串是否为正确的月份
+     *
      * @param pay_month：匹配字符串
      * @return：匹配结果
      */
@@ -254,6 +265,7 @@ public class SysUtil {
 
     /**
      * 本方法用于根据输入的比较值来获得网格中符合条件的值的行位置
+     *
      * @param col：为-1时表示根据默认的字段比较；不为-1时表示比对当前列
      * @param val：比较值
      * @param last_search_val：上一个比较值，用于区分是否需要从网格初始位置进行比较
@@ -419,6 +431,7 @@ public class SysUtil {
 
     /**
      * 此方法用于获得排序号
+     *
      * @param orders：已经存在的排序号
      * @param start_num：开始序号
      * @return：最终的排序号
@@ -433,6 +446,7 @@ public class SysUtil {
 
     /**
      * 获得排序语句
+     *
      * @param showScheme：显示方案
      * @param start_name：表的别名,如果为空，则视为没有别名
      * @param order_sql：传进来排序语句
@@ -469,6 +483,7 @@ public class SysUtil {
 
     /**
      * 获得排序语句
+     *
      * @param showScheme：显示方案
      * @param order_sql：传进来排序语句
      * @param all_fields:当前允许显示的所有字段
@@ -509,6 +524,7 @@ public class SysUtil {
 
     /**
      * 获得排序语句
+     *
      * @param showScheme：显示方案
      * @param order_sql：传进来排序语句
      * @param all_fields:当前允许显示的所有字段
@@ -1064,6 +1080,7 @@ public class SysUtil {
 
     /**
      * 该方法用于校验身份证号码的有效性，其中不验证身份证的校验位有效性
+     *
      * @param IdentityNo：身份证号码
      * @return：有效性（true,false)
      */
@@ -1418,8 +1435,7 @@ public class SysUtil {
     /**
      * 校验身份证
      *
-     * @param certiCode
-     *            待校验身份证
+     * @param certiCode 待校验身份证
      * @return 0--校验成功; 1--位数不对; 2--生日格式不对 ; 3--校验位不对 ; 4--其他异常;5--字符异常;
      * @param certiCode
      * @return
@@ -1474,6 +1490,7 @@ public class SysUtil {
 
     /**
      * 判断身份证号码是否有效
+     *
      * @param idCard
      * @return
      */
@@ -1487,6 +1504,7 @@ public class SysUtil {
 
     /**
      * 检查字符串是否全为数字
+     *
      * @param certiCode
      * @return
      */
@@ -1501,9 +1519,10 @@ public class SysUtil {
 
     /**
      * 该方法用于处理树状结构List<String>,形如：101,10101,1010101,过滤掉无用的数据
+     *
      * @param data：树状结构List
      * @param onlyChild：是否只要子级数据；如上例：为true时，则结果只要1010101，为false时，结果只要101
-     * @return 
+     * @return
      */
     public static List<String> tranTreeStr(List<String> data, boolean onlyChild) {
         SysUtil.sortStrList(data);

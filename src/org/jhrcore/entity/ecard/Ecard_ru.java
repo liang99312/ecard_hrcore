@@ -25,20 +25,22 @@ public class Ecard_ru extends Model implements Serializable, KeyInterface, IKey 
     public String ecard_ru_key;
     @FieldAnnotation(visible = false)
     public String ecard_key;
-    @FieldAnnotation(visible = true, displayName = "账户名称", groupName = "Default", not_null = true,editableWhenNew=false, editableWhenEdit = false)
+    @FieldAnnotation(visible = true, displayName = "账户名称", groupName = "Default", not_null = true, editableWhenNew = false, editableWhenEdit = false)
     public String ecard_name;
-    @FieldAnnotation(visible = true, displayName = "卡号", groupName = "Default", not_null = true,editableWhenNew=false, editableWhenEdit = false)
+    @FieldAnnotation(visible = true, displayName = "卡号", groupName = "Default", not_null = true, editableWhenNew = false, editableWhenEdit = false)
     public String ecard_code;
-    @FieldAnnotation(visible = true, displayName = "发卡银行", groupName = "Default", not_null = true,editableWhenNew=false, editableWhenEdit = false)
+    @FieldAnnotation(visible = true, displayName = "发卡银行", groupName = "Default", not_null = true, editableWhenNew = false, editableWhenEdit = false)
     public String ecard_bank;
-    @FieldAnnotation(visible = true, displayName = "年月", groupName = "Default", not_null = true,editableWhenNew=false, editableWhenEdit = false)
+    @FieldAnnotation(visible = true, displayName = "年月", groupName = "Default", not_null = true, editableWhenNew = false, editableWhenEdit = false)
     public String ru_ym;
-    @FieldAnnotation(visible = true, displayName = "日期", groupName = "Default", not_null = true,editableWhenNew=false, editableWhenEdit = false)
+    @FieldAnnotation(visible = true, displayName = "日期", groupName = "Default", not_null = true, editableWhenNew = false, editableWhenEdit = false)
     public Date ru_date;
     @FieldAnnotation(visible = true, displayName = "汇款金额", groupName = "Default", isEditable = true)
     public Integer ru_je;
     @FieldAnnotation(visible = true, displayName = "备注", groupName = "Default", isEditable = true)
     public String ru_mark;
+    @FieldAnnotation(visible = false, groupName = "Default", isEditable = false)
+    public String ru_flag = "是";
     public transient int new_flag = 0;
     public transient int ru_zonge = 0;
 
@@ -131,6 +133,16 @@ public class Ecard_ru extends Model implements Serializable, KeyInterface, IKey 
         this.firePropertyChange("ru_mark", old, ru_mark);
     }
 
+    public String getRu_flag() {
+        return this.ru_flag;
+    }
+
+    public void setRu_flag(String ru_flag) {
+        String old = this.ru_flag;
+        this.ru_flag = ru_flag;
+        firePropertyChange("ru_flag", old, ru_flag);
+    }
+
     @Override
     @Transient
     public long getKey() {
@@ -147,7 +159,7 @@ public class Ecard_ru extends Model implements Serializable, KeyInterface, IKey 
         this.new_flag = new_flag;
         this.firePropertyChange("new_flag", old, new_flag);
     }
-    
+
     @Transient
     public int getRu_zonge() {
         return ru_zonge;

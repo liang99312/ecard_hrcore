@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.jhrcore.entity.ecard;
 
 import com.jgoodies.binding.beans.Model;
@@ -22,27 +21,39 @@ import org.jhrcore.entity.annotation.FieldAnnotation;
  */
 @Entity
 @ClassAnnotation(displayName = "POS机", moduleName = "信用卡管理")
-public class Epos extends Model implements Serializable, IKey, KeyInterface  {
-    @FieldAnnotation(visible = false,isEditable=false, displayName = "ID")
+public class Epos extends Model implements Serializable, IKey, KeyInterface {
+
+    @FieldAnnotation(visible = false, isEditable = false, displayName = "ID")
     public String epos_key;
-    @FieldAnnotation(visible = true,isEditable=true,displayName = "编号")
+    @FieldAnnotation(visible = true, isEditable = true, displayName = "编号")
     public String epos_code;
-    @FieldAnnotation(visible = true,isEditable=true,displayName = "POS机名称")
+    @FieldAnnotation(visible = true, isEditable = true, displayName = "POS机名称")
     public String epos_name;
-    @FieldAnnotation(visible = true,isEditable=true,displayName = "消费项目")
+    @FieldAnnotation(visible = true, isEditable = true, displayName = "消费项目")
     public String epos_item;
-    @FieldAnnotation(visible = true,isEditable=true,displayName = "费率")
+    @FieldAnnotation(visible = true, isEditable = true, displayName = "费率")
     public String epos_fei;
     @FieldAnnotation(visible = true, displayName = "消费上限", groupName = "Default", isEditable = true)
     public Float chu_up = 0F;
     @FieldAnnotation(visible = true, displayName = "消费下限", groupName = "Default", isEditable = true)
     public Float chu_down = 0F;
-    @FieldAnnotation(visible = true,isEditable=true,displayName = "保留小数")
-    @EnumHint(enumList = "是;否")
+    @FieldAnnotation(visible = true, isEditable = true, displayName = "数据类型")
+    @EnumHint(enumList = "整型;小数;整百")
     public String epos_xiaoshu;
-    @FieldAnnotation(visible = true,isEditable=true,displayName = "备注")
+    @FieldAnnotation(visible = true, displayName = "消费次数", groupName = "Default", isEditable = true)
+    public Integer epos_cishu = Integer.valueOf(100);
+    @FieldAnnotation(visible = true, isEditable = true, displayName = "启用")
+    @EnumHint(enumList = "是;否")
+    public String epos_qiyong;
+    @FieldAnnotation(visible = true, isEditable = true, displayName = "顺序号")
+    public String epos_num;
+    @FieldAnnotation(visible = true, isEditable = true, displayName = "大额消费")
+    @EnumHint(enumList = "是;否")
+    public String epos_dae = "否";
+    @FieldAnnotation(visible = true, isEditable = true, displayName = "备注")
     public String epos_mark;
     public transient int new_flag = 0;
+
     @Id
     public String getEpos_key() {
         return epos_key;
@@ -122,6 +133,46 @@ public class Epos extends Model implements Serializable, IKey, KeyInterface  {
         this.firePropertyChange("epos_xiaoshu", old, epos_xiaoshu);
     }
 
+    public Integer getEpos_cishu() {
+        return this.epos_cishu;
+    }
+
+    public void setEpos_cishu(Integer epos_cishu) {
+        Integer old = this.epos_cishu;
+        this.epos_cishu = epos_cishu;
+        this.firePropertyChange("epos_cishu", old, epos_cishu);
+    }
+
+    public String getEpos_qiyong() {
+        return this.epos_qiyong;
+    }
+
+    public void setEpos_qiyong(String epos_qiyong) {
+        String old = this.epos_qiyong;
+        this.epos_qiyong = epos_qiyong;
+        this.firePropertyChange("epos_qiyong", old, epos_qiyong);
+    }
+
+    public String getEpos_num() {
+        return this.epos_num;
+    }
+
+    public void setEpos_num(String epos_num) {
+        String old = this.epos_num;
+        this.epos_num = epos_num;
+        this.firePropertyChange("epos_num", old, epos_num);
+    }
+
+    public String getEpos_dae() {
+        return this.epos_dae;
+    }
+
+    public void setEpos_dae(String epos_dae) {
+        String old = this.epos_dae;
+        this.epos_dae = epos_dae;
+        this.firePropertyChange("epos_dae", old, epos_dae);
+    }
+
     public String getEpos_mark() {
         return epos_mark;
     }
@@ -154,7 +205,6 @@ public class Epos extends Model implements Serializable, IKey, KeyInterface  {
         return true;
     }
 
-
     @Transient
     public int getNew_flag() {
         return new_flag;
@@ -163,7 +213,7 @@ public class Epos extends Model implements Serializable, IKey, KeyInterface  {
     public void setNew_flag(int new_flag) {
         this.new_flag = new_flag;
     }
-    
+
     @Transient
     @Override
     public long getKey() {
@@ -175,9 +225,9 @@ public class Epos extends Model implements Serializable, IKey, KeyInterface  {
         this.epos_key = key;
         this.new_flag = 1;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return epos_name;
     }
 }

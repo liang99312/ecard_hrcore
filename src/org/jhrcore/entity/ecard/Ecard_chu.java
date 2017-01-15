@@ -48,8 +48,9 @@ public class Ecard_chu extends Model implements Serializable, KeyInterface, IKey
     @FieldAnnotation(visible = true, displayName = "±¸×¢", groupName = "Default", isEditable = true)
     public String chu_mark;
     public transient int new_flag = 0;
-    public transient Float chu_zonge = 0F;
-    public transient float chu_sxf = 0F;
+    public transient Float chu_zonge = Float.valueOf(0.0F);
+    public transient Epos epos = null;
+    public transient float chu_sxf = 0.0F;
 
     @Id
     public String getEcard_chu_key() {
@@ -60,6 +61,17 @@ public class Ecard_chu extends Model implements Serializable, KeyInterface, IKey
         String old = this.ecard_chu_key;
         this.ecard_chu_key = ecard_chu_key;
         this.firePropertyChange("ecard_chu_key", old, ecard_chu_key);
+    }
+
+    @Transient
+    public Epos getEpos() {
+        return this.epos;
+    }
+
+    public void setEpos(Epos epos) {
+        Epos old = this.epos;
+        this.epos = epos;
+        this.firePropertyChange("epos", old, epos);
     }
 
     public String getEcard_key() {
@@ -171,6 +183,7 @@ public class Ecard_chu extends Model implements Serializable, KeyInterface, IKey
         this.chu_sxf = chu_sxf;
         this.firePropertyChange("chu_sxf", old, chu_sxf);
     }
+
     public String getChu_mark() {
         return chu_mark;
     }
